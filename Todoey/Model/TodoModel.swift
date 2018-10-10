@@ -8,8 +8,8 @@
 
 import Foundation
 
-class TodoModel {
-    
+class TodoModel: Encodable {
+    // as encodable all properties must be standard data types
     var title : String = ""
     var done : Bool = false
     
