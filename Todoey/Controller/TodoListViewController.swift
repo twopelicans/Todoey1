@@ -15,18 +15,19 @@ class TodoListViewController: UITableViewController {
         override func viewDidLoad() {
             super.viewDidLoad()
             
-            let newItem = TodoModel()
-            newItem.title = "Find Mike"
-            itemArray.append(newItem)
+//            let newItem = TodoModel()
+//            newItem.title = "Find Mike"
+//            itemArray.append(newItem)
+//
+//            let newItem1 = TodoModel()
+//            newItem1.title = "Buy Eggs"
+//            itemArray.append(newItem1)
+//
+//            let newItem2 = TodoModel()
+//            newItem2.title = "Kill Dragon"
+//            itemArray.append(newItem2)
             
-            let newItem1 = TodoModel()
-            newItem1.title = "Buy Eggs"
-            itemArray.append(newItem1)
-            
-            let newItem2 = TodoModel()
-            newItem2.title = "Kill Dragon"
-            itemArray.append(newItem2)
-            
+            loadItems()
     
         }
 
@@ -66,6 +67,9 @@ class TodoListViewController: UITableViewController {
         //print(itemArray[indexPath.row])
         
         itemArray[indexPath.row].done = !itemArray[indexPath.row].done
+        
+        saveItems()
+        
         tableView.reloadData() // needed as the done property defaults to false for new items hence to see if any items were selected ie done = true means data needs reloading.
         tableView.deselectRow(at: indexPath, animated: true) // doesnt seem to work??
         
@@ -84,7 +88,8 @@ class TodoListViewController: UITableViewController {
         let newItem = TodoModel()
             newItem.title = textField.text!
         self.itemArray.append(newItem)
-         self.tableView.reloadData()
+        self.saveItems()
+        self.tableView.reloadData()
             
         }
         alert.addTextField{ (alertTextField) in
@@ -98,6 +103,23 @@ class TodoListViewController: UITableViewController {
         present(alert, animated: true, completion: nil)
         
         
+    }
+    
+//MARK manipulate data model methods
+    func saveItems(){
+        // add Create Data Code
+    }
+    
+    func loadItems(){
+        //add Read Data Code
+    }
+    
+    func updateItems(){
+        //add Update Data Code
+    }
+    
+    func deleteItems(){
+        //add Delete Data Code
     }
     
 }
