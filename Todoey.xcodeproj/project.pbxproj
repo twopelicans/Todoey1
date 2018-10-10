@@ -56,12 +56,12 @@
 		EB27F098216E2C8200925DEA /* Todoey */ = {
 			isa = PBXGroup;
 			children = (
-				EB27F0AB216E4A3800925DEA /* Model */,
-				EB27F099216E2C8200925DEA /* AppDelegate.swift */,
-				EB27F0AE216E4AFD00925DEA /* Controller */,
-				EB27F0AF216E4B1100925DEA /* Views */,
-				EB27F0B0216E4B2900925DEA /* Supporting Files */,
 				EB27F0A5216E2C8300925DEA /* Info.plist */,
+				EB27F099216E2C8200925DEA /* AppDelegate.swift */,
+				EB27F0AB216E4A3800925DEA /* Model */,
+				EB27F0AF216E4B1100925DEA /* Views */,
+				EB27F0AE216E4AFD00925DEA /* Controller */,
+				EB27F0B0216E4B2900925DEA /* Supporting Files */,
 			);
 			path = Todoey;
 			sourceTree = "<group>";
