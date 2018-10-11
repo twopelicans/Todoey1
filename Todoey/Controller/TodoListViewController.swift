@@ -7,25 +7,18 @@
 //
 
 import UIKit
+import CoreData
 
 class TodoListViewController: UITableViewController {
     
-        var itemArray = [TodoModel]()
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        var itemArray = [Item]()
+    
     
         override func viewDidLoad() {
             super.viewDidLoad()
             
-//            let newItem = TodoModel()
-//            newItem.title = "Find Mike"
-//            itemArray.append(newItem)
-//
-//            let newItem1 = TodoModel()
-//            newItem1.title = "Buy Eggs"
-//            itemArray.append(newItem1)
-//
-//            let newItem2 = TodoModel()
-//            newItem2.title = "Kill Dragon"
-//            itemArray.append(newItem2)
+            
             
             loadItems()
     
@@ -85,8 +78,11 @@ class TodoListViewController: UITableViewController {
         
         let action = UIAlertAction(title: "Add Item", style: .default){ (action) in
             //What will happen once the user clicks the add item button on our UI Alert
-        let newItem = TodoModel()
-            newItem.title = textField.text!
+        
+        
+        let newItem = Item(context: self.context)
+        newItem.title = textField.text!
+        newItem.done = false
         self.itemArray.append(newItem)
         self.saveItems()
         self.tableView.reloadData()
@@ -107,19 +103,68 @@ class TodoListViewController: UITableViewController {
     
 //MARK manipulate data model methods
     func saveItems(){
-        // add Create Data Code
+//TODO add Create Data Code
+        do{
+            try context.save()
+        }catch{
+            print("Error saving Context \(error)")
+        }
+        self.tableView.reloadData()
     }
-    
-    func loadItems(){
-        //add Read Data Code
+    // func with external parameter (with) and internal parameter(request) and a default value of Item.Re... hence can call loaditems() with no arguments as default value is used.
+    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest()){
+//TODO add Read Data Code
+        
+        do{
+            try itemArray = context.fetch(request)
+        }catch{
+            print("Error in retrieving data \(error)")
+        }
+        
+        tableView.reloadData()
+        
     }
     
     func updateItems(){
-        //add Update Data Code
+//TODO add Update Data Code
+        
     }
     
     func deleteItems(){
-        //add Delete Data Code
+//TODO add Delete Data Code
+        
+    }
+    
+    
+    
+}
+//MARK: Search Bar Methods
+extension TodoListViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        let request : NSFetchRequest<Item> = Item.fetchRequest()
+        
+        request.predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
+        
+        
+        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+//        let sortDescriptor = NSSortDescriptor(key: "title", ascending: true)
+//        request.sortDescriptors = [sortDescriptor]
+//          replaced with let request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+        
+        loadItems(with: request)
+        
+       
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text?.count == 0 {
+           loadItems() //with default
+            // UI stuff is on main thread so to get rid of cursor and keyboard from view we need to get the queue and call the resign....
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder()
+            }
+           
+        }
     }
     
 }

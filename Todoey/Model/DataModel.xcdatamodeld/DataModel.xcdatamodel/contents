@@ -3,8 +3,14 @@
     <entity name="Item" representedClassName=".Item" syncable="YES" codeGenerationType="class">
         <attribute name="done" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="title" attributeType="String" defaultValueString="false" syncable="YES"/>
+        <relationship name="parentCategory" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Things" inverseName="items" inverseEntity="Things" syncable="YES"/>
+    </entity>
+    <entity name="Things" representedClassName="Things" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Item" inverseName="parentCategory" inverseEntity="Item" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Item" positionX="-63" positionY="-18" width="128" height="75"/>
+        <element name="Item" positionX="-2257.10546875" positionY="-2987.98828125" width="128" height="88"/>
+        <element name="Things" positionX="-2446.46875" positionY="-3018.59765625" width="128" height="73"/>
     </elements>
 </model>
