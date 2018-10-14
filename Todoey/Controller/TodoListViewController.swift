@@ -13,15 +13,19 @@ class TodoListViewController: UITableViewController {
     
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         var itemArray = [Item]()
+    var selectedThing : Things? {
+        didSet{
+            //print (selectedThing!)
+            loadItems()
+        }
+    }
     
     
         override func viewDidLoad() {
             super.viewDidLoad()
             
+   
             
-            
-            loadItems()
-    
         }
 
 //MARK - Tableview Daatasource Methods
@@ -58,7 +62,7 @@ class TodoListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //print(itemArray[indexPath.row])
-        
+       
         itemArray[indexPath.row].done = !itemArray[indexPath.row].done
         
         saveItems()
@@ -67,6 +71,7 @@ class TodoListViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true) // doesnt seem to work??
         
     }
+    
     
 //MARK - Add New Items
     
@@ -83,6 +88,7 @@ class TodoListViewController: UITableViewController {
         let newItem = Item(context: self.context)
         newItem.title = textField.text!
         newItem.done = false
+        newItem.parentCategory = self.selectedThing
         self.itemArray.append(newItem)
         self.saveItems()
         self.tableView.reloadData()
@@ -112,8 +118,17 @@ class TodoListViewController: UITableViewController {
         self.tableView.reloadData()
     }
     // func with external parameter (with) and internal parameter(request) and a default value of Item.Re... hence can call loaditems() with no arguments as default value is used.
-    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest()){
+    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest(), predicate: NSPredicate? = nil){
 //TODO add Read Data Code
+        let categoryPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedThing!.name!)
+   
+        // optional binding
+        if let additionalPrediate = predicate {
+            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, additionalPrediate])
+        }else {
+            request.predicate = categoryPredicate
+        }
+        
         
         do{
             try itemArray = context.fetch(request)
