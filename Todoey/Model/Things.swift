@@ -12,5 +12,9 @@ import RealmSwift
 class Things: Object {
     
     @objc dynamic var name: String = ""
+    
+    //relationship (LIst comes from realm framework)
+    
+    let items = List<Item>()
    
 }

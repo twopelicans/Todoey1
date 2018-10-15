@@ -97,8 +97,8 @@
 		EB27F0AB216E4A3800925DEA /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				EB50520021735A04003BB37A /* Item.swift */,
 				EB50520221735A11003BB37A /* Things.swift */,
+				EB50520021735A04003BB37A /* Item.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
